@@ -4,6 +4,7 @@ import com.example.demo.student.Student;
 import com.example.demo.student.StudentRepository;
 import com.example.demo.student.StudentService;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ class Demo2ApplicationTests {
 		underTest = new StudentService(studentRepository);
 	}
 
-	@AfterEach
+	@BeforeEach
 	void tearDown() {
 		studentRepository.deleteAll();
 	}
@@ -62,15 +63,14 @@ class Demo2ApplicationTests {
 		//when
 		Student malika = new Student(
 				"Malika Kassen-Lao",
-				"malika@gmail.com",
+				"malikasenova@gmail.com",
 				LocalDate.of(1989, OCTOBER, 19)
 		);
 
 		underTest.addNewStudent(malika);
 		Optional<Student> actual= studentRepository.findStudentByEmail("malikasenova@gmail.com");
-		System.out.println(actual);
 
 		//then
-		assertEquals("malikasenova@gmail.com", actual.email);
+		assertEquals("malikasenova@gmail.com", actual.get().getEmail());
 	}
 }
